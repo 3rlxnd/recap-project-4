@@ -10,6 +10,7 @@ function App() {
   const [ colors, setColors ] =useState(initialColors)
 
   function handleAdd(newColor) {
+    
     setColors((prev) => [{
       id: uid(), 
       role: newColor.role,
@@ -18,14 +19,11 @@ function App() {
     }, ...prev])
   }
 
-  function handleDelete(id) {
-    console.log(id);
-    
-    setColors(colors.filter((color) => color.id !== id))
-  }
-
   
 
+  function handleDelete(id) {
+    setColors(colors.filter((color) => color.id !== id))
+  }
 
   return (
     <>
