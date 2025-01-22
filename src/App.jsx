@@ -18,6 +18,12 @@ function App() {
     }, ...prev])
   }
 
+  function handleDelete(id) {
+    console.log(id);
+    
+    setColors(colors.filter((color) => color.id !== id))
+  }
+
   
 
 
@@ -25,9 +31,9 @@ function App() {
     <>
       <h1>Theme Creator</h1>
       <ColorForm handleAdd={handleAdd}/>
-      {colors.map((color) => {
-        return <Color key={color.id} color={color} />;
-      })}
+      {colors.length > 0 ? colors.map((color) => {
+        return <Color key={color.id} id={color.id} color={color} onDelete={handleDelete}/>
+      }) : <p>Nothing here yet! Please add a Color</p>}
     </>
   );
 }
