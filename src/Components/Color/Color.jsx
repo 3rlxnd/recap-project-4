@@ -3,10 +3,27 @@ import { useState, useEffect } from "react";
 import ColorForm from "../ColorForm/ColorForm";
 import CopyButton from "../CopyButton/CopyButton";
 
-export default function Color({ color, onDelete, onEdit, onCopy }) {
+export default function Color({ color, onDelete, onEdit }) {
   const [deleteMessage, setDeleteMessage] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [check, setCheck] = useState('')
+
+  const getResult = async (foreground, background) => {
+    const repsonse = await fetch("https://www.aremycolorsaccessible.com/api/are-they", {
+      method: "POST",
+      body: JSON.stringify({ colors: [foreground, background] })
+    })
+    const data = await repsonse.json()
+    console.log(await data);
+    
+    setCheck(data.overall)
+  };
+
+  useEffect(() => {
+    getResult(color.contrastText, color.hez)
+  }, [color])
+
 
   useEffect(() => {
     setInterval(() => {
@@ -24,10 +41,11 @@ export default function Color({ color, onDelete, onEdit, onCopy }) {
     <div className="color-card" style={{ background: color.hex, color: color.contrastText, }}>
       <h3 className="color-card-headline">{color.hex}</h3>
       <CopyButton onCopy={() => handleCopy(color.hex)} />
-        {copied && <p>Copied</p>}
+      {copied && <p>Copied</p>}
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
-
+      <p>{color.result}</p>
+      <p>{check}</p>
 
 
       {editMode ?
