@@ -13,11 +13,11 @@ export default function Color({ color, onDelete, onEdit, onCopy }) {
       setCopied(false)
     }, 3000)
     clearInterval()
-  }, copied)
+  }, [copied])
 
   async function handleCopy(color) {
-    await navigator.clipboard.writeText(color)
     setCopied(true)
+    await navigator.clipboard.writeText(color)
   }
 
   return (

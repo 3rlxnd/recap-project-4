@@ -2,7 +2,7 @@ import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import ColorForm from "./Components/ColorForm/ColorForm";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { uid } from "uid";
 
 // localStorage.clear();
@@ -42,17 +42,17 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
-      <ColorForm
-        handleData={handleAdd}
-        text='Add'
-        values={{ contrast: '#ffffff', hex: '#000000', role: 'Primary Color' }} />
+      <ColorForm 
+      handleData={handleAdd} 
+      text='Add' 
+      values={{ contrast: '#ffffff', hex: '#000000', role: 'Primary Color' }} />
 
-      {colors.length > 0 ? colors.map((color) =>
-        <Color
-          key={color.id}
-          color={color}
-          onDelete={handleDelete}
-          onEdit={handleEdit} />
+      {colors.length > 0 ? colors.map((color) => 
+       <Color 
+        key={color.id} 
+        color={color} 
+        onDelete={handleDelete} 
+        onEdit={handleEdit}/>
       ) : <p>Nothing here yet! Please add a Color</p>}
     </>
   );
