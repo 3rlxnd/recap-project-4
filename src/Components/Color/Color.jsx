@@ -18,7 +18,6 @@ export default function Color({ color, onDelete, onEdit, onCopy }) {
   async function handleCopy(color) {
     await navigator.clipboard.writeText(color)
     setCopied(true)
-
   }
 
   return (
