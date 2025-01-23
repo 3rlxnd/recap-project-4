@@ -5,8 +5,6 @@ import ColorForm from "../ColorForm/ColorForm";
 export default function Color({ color, onDelete, onEdit }) {
   const [deleteMessage, setDeleteMessage] = useState(false)
   const [editMode, setEditMode] = useState(false)
-  console.log(color.id);
-
 
   return (
     <div className="color-card" style={{ background: color.hex, color: color.contrastText, }}>
