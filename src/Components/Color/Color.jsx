@@ -1,18 +1,34 @@
 import "./Color.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ColorForm from "../ColorForm/ColorForm";
 import CopyButton from "../CopyButton/CopyButton";
 
 export default function Color({ color, onDelete, onEdit, onCopy }) {
   const [deleteMessage, setDeleteMessage] = useState(false)
   const [editMode, setEditMode] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    setInterval(() => {
+      setCopied(false)
+    }, 3000)
+    clearInterval()
+  }, copied)
+
+  async function handleCopy(color) {
+    await navigator.clipboard.writeText(color)
+    setCopied(true)
+
+  }
 
   return (
     <div className="color-card" style={{ background: color.hex, color: color.contrastText, }}>
       <h3 className="color-card-headline">{color.hex}</h3>
-      <CopyButton onCopy={onCopy} />
+      <CopyButton onCopy={() => handleCopy(color.hex)} />
+        {copied && <p>Copied</p>}
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
+
 
 
       {editMode ?
@@ -31,9 +47,6 @@ export default function Color({ color, onDelete, onEdit, onCopy }) {
           }
         </>
       }
-
-
-
     </div>
   );
 }

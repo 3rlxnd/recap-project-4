@@ -2,7 +2,7 @@ import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import ColorForm from "./Components/ColorForm/ColorForm";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { uid } from "uid";
 
 // localStorage.clear();
@@ -39,10 +39,6 @@ function App() {
     localStorage.setItem('colors', [JSON.stringify(newColors)])
   }
 
-  function handleCopy() {
-    nul
-  }
-
   return (
     <>
       <h1>Theme Creator</h1>
@@ -56,8 +52,7 @@ function App() {
         key={color.id} 
         color={color} 
         onDelete={handleDelete} 
-        onEdit={handleEdit} 
-        onCopy={handleCopy}/>
+        onEdit={handleEdit}/>
       ) : <p>Nothing here yet! Please add a Color</p>}
     </>
   );
