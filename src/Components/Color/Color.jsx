@@ -62,9 +62,9 @@ export default function Color({ color, onDelete, onEdit }) {
       <CopyButton onCopy={() => handleCopy(color.hex)} />
       {copied && <p>Copied</p>}
       <h4>{color.role}</h4>
-      <p>contrast: {color.contrastText}</p>
+      <p>{color.contrastText}</p>
       <p>{color.result}</p>
-      <p>{check}</p>
+      <p>Contrast Result: {check}</p>
 
 
       {editMode ?
