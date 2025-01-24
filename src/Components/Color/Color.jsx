@@ -3,13 +3,15 @@ import { useState, useEffect } from "react";
 import ColorForm from "../ColorForm/ColorForm";
 import CopyButton from "../CopyButton/CopyButton";
 
+
 export default function Color({ color, onDelete, onEdit }) {
   const [deleteMessage, setDeleteMessage] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [copied, setCopied] = useState(false)
   const [check, setCheck] = useState('')
+  const [name, setName] = useState('')
 
-  const getResult = async (foreground, background) => {
+  const getContrastResult = async (foreground, background) => {
     const repsonse = await fetch("https://www.aremycolorsaccessible.com/api/are-they", {
       method: "POST",
       body: JSON.stringify({ colors: [foreground, background] })
@@ -20,8 +22,24 @@ export default function Color({ color, onDelete, onEdit }) {
     setCheck(data.overall)
   };
 
+  const getNameResult = async (color) => {
+    const repsonse = await fetch(`https://api.color.pizza/v1/?values=${color.replace("#", "")}`)
+    const data = await repsonse.json()
+    setName(await data.paletteTitle)
+  };
+
+
+// nearestColor need objects {name => hex} as input
+// const colors = colornames.reduce((o, { name, hex }) => Object.assign(o, { [name]: hex }), {});
+
+// const nearest = nearestColor.from(colors);
+
+// // get closest named color
+// console.log(nearest('#f1c1d1'))
+
   useEffect(() => {
-    getResult(color.contrastText, color.hex)
+    getContrastResult(color.contrastText, color.hex)
+    getNameResult(color.hex)
   }, [color])
 
 
@@ -39,7 +57,8 @@ export default function Color({ color, onDelete, onEdit }) {
 
   return (
     <div className="color-card" style={{ background: color.hex, color: color.contrastText, }}>
-      <h3 className="color-card-headline">{color.hex}</h3>
+      <h3>{name}</h3>
+      <p className="color-card-headline">{color.hex}</p>
       <CopyButton onCopy={() => handleCopy(color.hex)} />
       {copied && <p>Copied</p>}
       <h4>{color.role}</h4>
