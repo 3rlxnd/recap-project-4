@@ -21,7 +21,7 @@ export default function Color({ color, onDelete, onEdit }) {
   };
 
   useEffect(() => {
-    getResult(color.contrastText, color.hez)
+    getResult(color.contrastText, color.hex)
   }, [color])
 
 

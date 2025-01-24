@@ -17,14 +17,13 @@ export default function ColorForm({handleData, text, values, id}) {
 
     return (
         <form onSubmit={handleSubmit}>
-            Role
+            <label htmlFor="role">Role</label>
             <input id='role' type="text" name='role' value={role} onChange={handleChange}/>
-            <br />
-            Hex
-            <ColorInput name='hex' value={values.hex}/>
-            <br />
-            Contrast Text
-            <ColorInput name='contrast' value={values.contrast}/>
+            <label htmlFor="hex">Hex</label>
+            <ColorInput id='hex' name='hex' value={values.hex}/>
+       
+            <label htmlFor="contrast">Contrast</label>
+            <ColorInput id='contrast' name='contrast' value={values.contrast}/>
             <button >{text} Color</button>
         </form>
     )
