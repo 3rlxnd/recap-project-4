@@ -12,10 +12,13 @@ export default function Color({ color, onDelete, onEdit }) {
   const getResult = async (foreground, background) => {
     const repsonse = await fetch("https://www.aremycolorsaccessible.com/api/are-they", {
       method: "POST",
-      body: JSON.stringify({ colors: [foreground, background] })
+      body: JSON.stringify({ colors: [foreground, background] }),
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "Content-Type, Authorization"
+      }
     })
     const data = await repsonse.json()
-    console.log(await data);
     
     setCheck(data.overall)
   };
