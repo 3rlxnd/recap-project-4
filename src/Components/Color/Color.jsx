@@ -12,20 +12,33 @@ export default function Color({ color, onDelete, onEdit }) {
   const [name, setName] = useState('')
 
   const getContrastResult = async (foreground, background) => {
-    const repsonse = await fetch("https://www.aremycolorsaccessible.com/api/are-they", {
-      method: "POST",
-      body: JSON.stringify({ colors: [foreground, background] })
-    })
-    const data = await repsonse.json()
-    console.log(await data);
-    
-    setCheck(data.overall)
+    try {
+      const repsonse = await fetch("https://www.aremycolorsaccessible.com/api/are-they", {
+        method: "POST",
+        body: JSON.stringify({ colors: [foreground, background] })
+      })
+      if (!repsonse.ok) {
+        throw Error('Failed to fetch')
+      }
+      const data = await repsonse.json()
+      setCheck(data.overall)
+    } catch (error) {
+      console.error(error);
+      
+    }
   };
 
   const getNameResult = async (color) => {
-    const repsonse = await fetch(`https://api.color.pizza/v1/?values=${color.replace("#", "")}`)
-    const data = await repsonse.json()
-    setName(await data.paletteTitle)
+    try {
+      const repsonse = await fetch(`https://api.color.pizza/v1/?values=${color.replace("#", "")}`)
+      const data = await repsonse.json()
+      if (!repsonse.ok) {
+        throw Error('Failed to fetch')
+      }
+      setName(await data.paletteTitle) 
+    } catch (error) {
+      console.log(error);    
+    }
   };
 
 
